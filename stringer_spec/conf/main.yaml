@@ -1,0 +1,29 @@
+---
+team: infrastructure
+_service: go-gocd
+
+vars_templates:
+  - name: generic-service
+    vars:
+      name: '{{ _service }}'
+      namespace: '{{ team }}'
+      image: '{{ _docker_image | default("vevo/" + _service + ":latest") }}'
+      port: '{{  _port | default(8080) }}'
+      autoDNS: 'true'
+      env:
+        SERVICE_PORT: '{{ _port | default(8080) }}'
+      ## Uncomment that to pull your infrastructure/go-gocd/MY_CREDSTASH_SECRET secret from credstash
+      # secrets:
+      #   - MY_CREDSTASH_SECRET
+      livenessProbe:
+        httpGet:
+          path: '/up'
+      readinessProbe:
+        httpGet:
+          path: '/ready'
+      replicas: '{{ _min_replicas | default(1) }}'
+      ## Uncomment that if you want to autoscale your pods
+      # autoscaler:
+      #   enabled: 'true'
+      #   max_replicas: '{{ _max_replicas | default(2) }}'
+      #   target_utilization: '{{ _cpu_max | default(30) }}'

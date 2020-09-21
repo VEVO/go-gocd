@@ -1,0 +1,65 @@
+version: '2'
+# The volumes section lists the virtual volumes you are defining in order to not write them to disk.
+# It is important to keep them there and empty to avoid writing to disk data you would not want there.
+volumes:
+  config:
+  build:
+  node_modules:
+services:
+  slack_notify:
+    image: vevo/slack-notify:$SLACK_NOTIFY_VERSION
+    environment:
+      GO_PIPELINE_NAME: $GO_PIPELINE_NAME
+      GO_STAGE_NAME: $GO_STAGE_NAME
+      GO_JOB_NAME: $GO_JOB_NAME
+      GO_PIPELINE_COUNTER: $GO_PIPELINE_COUNTER
+      GO_TO_REVISION: $GO_TO_REVISION
+      VERBOSE: "true"
+    volumes:
+      - ..:/repos
+  success:
+    extends:
+      service: slack_notify
+    environment:
+      SUCCESS: "true"
+      SLACK_CHANNELS: $SLACK_CHANNELS_SUCCESS
+  failure:
+    extends:
+      service: slack_notify
+    environment:
+      SUCCESS: "false"
+      SLACK_CHANNELS: $SLACK_CHANNELS_FAILURE
+  dockerlint:
+    image: redcoolbeans/dockerlint
+    command: -p
+    volumes:
+      - $DOCKERFILE:/Dockerfile:ro
+  stringer:
+    image: vevo/stringer:$STRINGER_VERSION
+    volumes:
+      - ../stringer_spec:/spec:ro
+      - build:/build
+      - node_modules:/node_modules
+      - config:/root/.aws
+    environment:
+      BUILD_DIR: /build
+      SPEC_DIR: /spec
+      AWS_REGION: $AWS_REGION
+      CLUSTER: $CLUSTER
+      AWS_ACCOUNT: $AWS_ACCOUNT
+      AWS_PROFILE: $AWS_PROFILE
+  config:
+    image: vevo/stringer-awsconfig:$AWSCONFIG_VERSION
+    environment:
+      - AWS_ACCOUNT
+      - AWS_PROFILE
+      - DEV_AWS_ACCESS_KEY_ID
+      - DEV_AWS_SECRET_ACCESS_KEY
+      - STG_AWS_ACCESS_KEY_ID
+      - STG_AWS_SECRET_ACCESS_KEY
+      - PRD_AWS_ACCESS_KEY_ID
+      - PRD_AWS_SECRET_ACCESS_KEY
+    volumes:
+      - config:/data
+      - ${HOME}:/external_home
+# vim: ft=yaml
