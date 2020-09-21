@@ -1,4 +1,12 @@
-FROM alpine:latest
-RUN echo 'while true; do printf "HTTP/1.1 200 OK\n\n%s" "<html><head><title>Monitoring</title></head><body>OK</body></html>" | nc -l -p8080; done' > /cmd.sh \
-    && chmod +x /cmd.sh
-CMD ["sh", "-c", "/cmd.sh"]
+ARG GOCD_VERSION
+FROM gocd/gocd-server:${GOCD_VERSION}
+
+ARG UID
+ARG ENTRYPOINT_USER
+
+USER root
+
+RUN apk --no-cache add shadow && \
+    usermod -u ${UID} go
+
+USER ${ENTRYPOINT_USER}

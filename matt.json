@@ -1,0 +1,85 @@
+{
+  "name": "matt-20200915",
+  "environment_variables": [
+    {
+      "secure": false,
+      "name": "SLACK_CHANNELS_SUCCESS",
+      "value": "##infrastructure-alerts"
+    },
+    {
+      "secure": false,
+      "name": "SLACK_CHANNELS_FAILURE",
+      "value": "##infrastructure-alerts"
+    }
+  ],
+  "group" : "infrastructure",
+  "materials": [
+    {
+      "type": "git",
+      "attributes":{
+                  "url": "git@github.com:VEVO/matt-20200915.git",
+                  "destination":"dest",
+                  "filter":null,
+                  "invert_filter":false,
+                  "name":null,
+                  "auto_update":true,
+                  "branch":"master",
+                  "submodule_folder":null,
+                  "shallow_clone":true
+               }
+
+
+    }
+  ],
+  "stages":[
+     {
+       "name": "stage_build",
+       "fetch_materials": true,
+       "never_cleanup_artifacts": false,
+       "clean_working_directory": false,
+       "approval":{
+           "type":"success",
+           "authorization":{
+              "roles":[
+              ],
+              "users":[
+              ]
+           }
+        },
+       "environment_variables": [],
+       "jobs": [
+         {
+           "name": "build",
+           "environment_variables": [],
+           "tabs": [],
+           "resources": [],
+           "artifacts": [],
+           "properties": [],
+           "run_instance_count": null,
+           "timeout": 0,
+           "tasks": [
+             {
+               "type": "exec",
+               "attributes":{
+               "command": "make",
+               "arguments": [
+                 "build"
+                 ]
+               }
+             },
+             {
+               "type": "exec",
+               "attributes":{
+               "command": "make",
+               "arguments": [
+                 "slack_failure"
+                 ]
+               },
+               "run_if": "failed"
+             }
+           ]
+         }
+       ]
+     }
+  ]
+}
