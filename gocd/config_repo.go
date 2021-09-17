@@ -43,7 +43,7 @@ func (crs *ConfigRepoService) List(ctx context.Context) (repos []*ConfigRepo, re
 	_, resp, err = crs.client.getAction(ctx, &APIClientRequest{
 		Path:         "admin/config_repos",
 		ResponseBody: r,
-		APIVersion:   apiV2,
+		APIVersion:   apiV4,
 	})
 
 	for _, repos := range r.Embedded.Repos {
@@ -60,7 +60,7 @@ func (crs *ConfigRepoService) Get(ctx context.Context, id string) (out *ConfigRe
 	_, resp, err = crs.client.getAction(ctx, &APIClientRequest{
 		Path:         fmt.Sprintf("admin/config_repos/%s", id),
 		ResponseBody: out,
-		APIVersion:   apiV2,
+		APIVersion:   apiV4,
 	})
 
 	out.client = crs.client
@@ -74,7 +74,7 @@ func (crs *ConfigRepoService) Create(ctx context.Context, cr *ConfigRepo) (out *
 		Path:         "admin/config_repos",
 		RequestBody:  cr,
 		ResponseBody: out,
-		APIVersion:   apiV2,
+		APIVersion:   apiV4,
 	})
 
 	out.client = crs.client
@@ -88,7 +88,7 @@ func (crs *ConfigRepoService) Update(ctx context.Context, id string, cr *ConfigR
 		Path:         fmt.Sprintf("admin/config_repos/%s", id),
 		RequestBody:  cr,
 		ResponseBody: out,
-		APIVersion:   apiV2,
+		APIVersion:   apiV4,
 	})
 
 	out.client = crs.client
@@ -97,5 +97,5 @@ func (crs *ConfigRepoService) Update(ctx context.Context, id string, cr *ConfigR
 
 // Delete the specified config repo
 func (crs *ConfigRepoService) Delete(ctx context.Context, id string) (string, *APIResponse, error) {
-	return crs.client.deleteAction(ctx, fmt.Sprintf("admin/config_repos/%s", id), apiV2)
+	return crs.client.deleteAction(ctx, fmt.Sprintf("admin/config_repos/%s", id), apiV4)
 }
