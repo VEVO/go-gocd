@@ -37,6 +37,13 @@ type ConfigRepoProperty struct {
 	EncryptedValue string `json:"encrypted_value,omitempty"`
 }
 
+type RuleProperty struct {
+	directive       string "allow"
+	action          string "refer"
+	type            string "pipeline_group"
+	resource        string "*"
+}
+
 // List returns all available config repos, these are config repositories that
 // are present in the in `cruise-config.xml`
 func (crs *ConfigRepoService) List(ctx context.Context) (repos []*ConfigRepo, resp *APIResponse, err error) {
