@@ -38,10 +38,10 @@ type ConfigRepoProperty struct {
 }
 
 type RuleProperty struct {
-	Directive       string "allow"
-	Action          string "refer"
-	Type            string "pipeline_group"
-	Resource        string "*"
+	Directive       string `json:"allow"`
+	Action          string `json:"refer"`
+	Type            string `json:"pipeline_group"`
+	Resource        string `json:"*"`
 }
 
 // List returns all available config repos, these are config repositories that
