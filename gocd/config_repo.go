@@ -24,7 +24,7 @@ type ConfigRepo struct {
 	PluginID      string                `json:"plugin_id"`
 	Material      Material              `json:"material"`
 	Configuration []*ConfigRepoProperty `json:"configuration,omitempty"`
-	Rules         string                `json:"rules"`
+	Rules         string                `string:"rules"`
 	Links         *HALLinks             `json:"_links,omitempty,omitempty"`
 	Version       string                `json:"version,omitempty"`
 	client        *Client
