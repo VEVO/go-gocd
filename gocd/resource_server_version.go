@@ -69,10 +69,12 @@ func init() {
 				newServerAPI("20.2.0", apiV3)),
 			"/api/admin/environments": newVersionCollection(
 				newServerAPI("16.7.0", apiV2),
-				newServerAPI("19.9.0", apiV3)),
+				newServerAPI("19.9.0", apiV3),
+				newServerAPI("21.2.0", apiV4)),
 			"/api/admin/environments/:environment_name": newVersionCollection(
 				newServerAPI("16.7.0", apiV2),
-				newServerAPI("19.9.0", apiV3)),
+				newServerAPI("19.9.0", apiV3),
+				newServerAPI("21.2.0", apiV4)),
 		},
 	}
 }
