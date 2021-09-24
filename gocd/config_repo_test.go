@@ -101,7 +101,7 @@ func testConfigRepoDelete(t *testing.T) {
 
 	mux.HandleFunc("/api/admin/config_repos/repo1", func(w http.ResponseWriter, r *http.Request) {
 		assert.Equal(t, r.Method, "DELETE", "Unexpected HTTP method")
-		assert.Equal(t, r.Header.Get("Accept"), apiV1)
+		assert.Equal(t, r.Header.Get("Accept"), apiV4)
 		fmt.Fprint(w, `{
 										  "message": "The config repo 'repo1' was deleted successfully."
 										}`)
