@@ -24,7 +24,7 @@ type ConfigRepo struct {
 	PluginID      string                `json:"plugin_id"`
 	Material      Material              `json:"material"`
 	Configuration []*ConfigRepoProperty `json:"configuration,omitempty"`
-	Rules         []*RuleProperty       `json:"rules"`
+	Rules         []*RuleProperty       `json:"rules,omitempty"`
 	Links         *HALLinks             `json:"_links,omitempty,omitempty"`
 	Version       string                `json:"version,omitempty"`
 	client        *Client
@@ -38,10 +38,10 @@ type ConfigRepoProperty struct {
 }
 
 type RuleProperty struct {
-	Directive       string `json:"allow"`
-	Action          string `json:"refer"`
-	Type            string `json:"pipeline_group"`
-	Resource        string `json:"*"`
+	Directive string `json:"directive"`
+	Action    string `json:"action"`
+	Type      string `json:"type"`
+	Resource  string `json:"resource"`
 }
 
 // List returns all available config repos, these are config repositories that
