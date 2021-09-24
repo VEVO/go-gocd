@@ -15,6 +15,7 @@ func init() {
 			"/api/version": newVersionCollection(
 				newServerAPI("16.6.0", apiV1)),
 			"/api/admin/pipelines/:pipeline_name": newVersionCollection(
+				newServerAPI("21.2.0", apiV11),
 				newServerAPI("19.10.0", apiV10),
 				newServerAPI("19.8.0", apiV9),
 				newServerAPI("19.6.0", apiV8),
@@ -69,10 +70,12 @@ func init() {
 				newServerAPI("20.2.0", apiV3)),
 			"/api/admin/environments": newVersionCollection(
 				newServerAPI("16.7.0", apiV2),
-				newServerAPI("19.9.0", apiV3)),
+				newServerAPI("19.9.0", apiV3),
+				newServerAPI("21.2.0", apiV3)),
 			"/api/admin/environments/:environment_name": newVersionCollection(
 				newServerAPI("16.7.0", apiV2),
-				newServerAPI("19.9.0", apiV3)),
+				newServerAPI("19.9.0", apiV3),
+				newServerAPI("21.2.0", apiV3)),
 		},
 	}
 }
