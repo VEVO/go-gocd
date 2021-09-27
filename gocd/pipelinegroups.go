@@ -24,22 +24,10 @@ func (pgs *PipelineGroupsService) List(ctx context.Context, name string) (*Pipel
 	
 	pg := []*PipelineGroup{}
 	_, resp, err := pgs.client.getAction(ctx, &APIClientRequest{
-		Path:         "admin/pipeline_groups",
+		Path:         "admin/pipeline_groups" + name,
 		APIVersion:   apiVersion,
-		ResponseType: responseTypeJSON,
-		ResponseBody: &pg,
+		ResponseBody: pg,
 	})
 
-	filtered := PipelineGroups{}
-	if name != "" && err == nil {
-		for _, pipelineGroup := range pg {
-			if pipelineGroup.Name == name {
-				filtered = append(filtered, pipelineGroup)
-			}
-		}
-	} else {
-		filtered = pg
-	}
-
-	return &filtered, resp, err
+	return
 }
