@@ -24,7 +24,7 @@ func (pgs *PipelineGroupsService) List(ctx context.Context, name string) (*Pipel
 	
 	pg := []*PipelineGroup{}
 	_, resp, err := pgs.client.getAction(ctx, &APIClientRequest{
-		Path:         "admin/pipeline_groups" + name,
+		Path:         "admin/pipeline_groups",
 		APIVersion:   apiVersion,
 		ResponseType: responseTypeJSON,
 		ResponseBody: &pg,
