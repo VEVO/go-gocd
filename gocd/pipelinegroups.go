@@ -17,7 +17,7 @@ type PipelineGroup struct {
 // List Pipeline groups
 func (pgs *PipelineGroupsService) List(ctx context.Context, name string) (*PipelineGroups, *APIResponse, error) {
 
-	apiVersion, err := pgs.client.getAPIVersion(ctx, "admin/pipeline_groups")
+	apiVersion, err := pgs.client.getAPIVersion(ctx, "admin/pipeline_groups/infrastructure")
 	if err != nil {
 		return nil, nil, err
 	}
