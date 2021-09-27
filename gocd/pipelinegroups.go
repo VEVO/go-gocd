@@ -5,7 +5,8 @@ import "context"
 // PipelineGroupsService describes the HAL _link resource for the api response object for a pipeline group response.
 type PipelineGroupsService service
 
-type PipelineGroups PipelineGroup
+// PipelineGroups represents a collection of pipeline groups
+type PipelineGroups []*PipelineGroup
 
 // PipelineGroup describes a pipeline group API response.
 type PipelineGroup struct {
@@ -21,12 +22,24 @@ func (pgs *PipelineGroupsService) List(ctx context.Context, name string) (*Pipel
 		return nil, nil, err
 	}
 	
-	pg := &PipelineGroup{}
+	pg := []*PipelineGroup{}
 	_, resp, err := pgs.client.getAction(ctx, &APIClientRequest{
 		Path:         "admin/pipeline_groups" + name,
 		APIVersion:   apiVersion,
-		ResponseBody: pg,
+		ResponseType: responseTypeJSON,
+		ResponseBody: &pg,
 	})
 
-	return
+	filtered := PipelineGroups{}
+	if name != "" && err == nil {
+		for _, pipelineGroup := range pg {
+			if pipelineGroup.Name == name {
+				filtered = append(filtered, pipelineGroup)
+			}
+		}
+	} else {
+		filtered = pg
+	}
+
+	return &filtered, resp, err
 }
