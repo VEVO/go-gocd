@@ -17,6 +17,11 @@ type PipelineGroup struct {
 // List Pipeline groups
 func (pgs *PipelineGroupsService) List(ctx context.Context, name string) (*PipelineGroups, *APIResponse, error) {
 
+	apiVersion, err := pgs.client.getAPIVersion(ctx, "/admin/pipeline_groups")
+	if err != nil {
+		return nil, nil, err
+	}
+	
 	pg := []*PipelineGroup{}
 	_, resp, err := pgs.client.getAction(ctx, &APIClientRequest{
 		Path:         "admin/pipeline_groups",
