@@ -5,6 +5,8 @@ import "context"
 // PipelineGroupsService describes the HAL _link resource for the api response object for a pipeline group response.
 type PipelineGroupsService service
 
+type PipelineGroups PipelineGroup
+
 // PipelineGroup describes a pipeline group API response.
 type PipelineGroup struct {
 	Name      string      `json:"name"`
