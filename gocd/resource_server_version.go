@@ -34,6 +34,8 @@ func init() {
 				newServerAPI("18.2.0", apiV1)),
 			"/api/pipelines/:pipeline_name/releaseLock": newVersionCollection(
 				newServerAPI("14.3.0", apiV0)),
+			"/api/admin/pipeline_groups": newVersionCollection(
+				newServerAPI("21.2.0", apiV1)),
 			"/api/pipelines/:pipeline_name/unlock": newVersionCollection(
 				newServerAPI("18.2.0", apiV1)),
 			"/api/pipelines/:pipeline_name/schedule": newVersionCollection(
